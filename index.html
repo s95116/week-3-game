@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hangman</title>
+</head>
+<body>
+
+
+
+<script type="text/javascript">
+
+var turnCounter = 13;
+var bandName = ['madonna'];
+var wins = 0;
+var losses = 0;
+var lettersUsed =[];
+
+
+
+document.onkeyup = function(event) {
+
+	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	
+	if(turnCounter > 0 ){
+		turnCounter-- ;
+	}
+
+	//If the letter selected is part of the array. Log "You selected correctly". Increment wins.
+	if(userGuess.indexOf(bandName)) {  
+      lettersUsed.push(userGuess);
+      wins++;
+      console.log("You selected correctly");
+    }
+
+    // If the letter selected isn't in the array. Log "Wrong letter" and increment losses counter
+    else{
+      losses++;
+      console.log("Wrong letter");
+      
+    }
+	
+	
+	document.getElementById('displayUserGuess').innerHTML = userGuess;
+	document.getElementById('displayTurnsRemaining').innerHTML = turnCounter;
+	document.getElementById('displayLettersUsed').innerHTML = lettersUsed.join(" ");
+	document.getElementById('howManyWins').innerHTML = wins;
+	document.getElementById('howManyLosses').innerHTML = losses;
+	
+
+
+}
+
+</script>
+
+<h1>Hangman Game</h1>
+<h2>Press any key to get started</h2>
+<br>
+<h3>You entered "<span id="displayUserGuess"></span>"</h3>
+<h3>Guesses Remaining: <span id="displayTurnsRemaining"></span></h3>
+<h4>Letters Used: "<span id="displayLettersUsed"></span>"</h4>
+<h4>Wins: "<span id="howManyWins"></span>"</h4>
+<h4>Losses: "<span id="howManyLosses"></span>"</h4>
+</body>
+</html>
