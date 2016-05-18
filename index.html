@@ -10,43 +10,78 @@
 <script type="text/javascript">
 
 var turnCounter = 13;
-var bandName = ['madonna'];
+var bandName = ["madonna"];
 var wins = 0;
 var losses = 0;
 var lettersUsed =[];
+var userGuess = "";
 
-
+function setScreen(){
+			document.getElementById('displayUserGuess').innerHTML = userGuess;
+			document.getElementById('displayTurnsRemaining').innerHTML = turnCounter;
+			document.getElementById('displayLettersUsed').innerHTML = lettersUsed.join(" ");
+			document.getElementById('howManyWins').innerHTML = wins;
+			document.getElementById('howManyLosses').innerHTML = losses;}
 
 document.onkeyup = function(event) {
 
-	var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+	
+	//Checks for duplicate letters entered
+	if(lettersUsed.indexOf(userGuess) != -1)
+    {
+        // alert("You've already used that letter");
+        return;
+    }
+	
 	
 	if(turnCounter > 0 ){
 		turnCounter-- ;
+
+		//If the letter selected is part of the array. Log "You selected correctly". Increment 'wins'.
+			if(userGuess.indexOf(bandName)) {  
+		      lettersUsed.push(userGuess);
+		      wins++;
+		      console.log("You selected correctly");
+		    }
+
+		    // If the letter selected isn't in the array. Log "Wrong letter" and increment losses counter
+		    else{
+		      losses++;
+		      console.log("Wrong letter");
+		      
+		    }
+			
+			setScreen();
+			
+
+	}//End of turncounter if statement
+
+	else{
+		alert("You lost");
+		var r = confirm("Would you like to play again?");
+			if (r == true) {
+
+				//reset variables
+				userGuess = "";
+				turnCounter = 13;
+				wins = 0;
+				losses = 0;
+				lettersUsed =[];
+				setScreen();
+
+			} else {
+			    alert("Have a great day!");
+			    userGuess = "";
+			    turnCounter = 13;
+				wins = 0;
+				losses = 0;
+				lettersUsed =[];
+				setScreen();
+				}
+
+
 	}
-
-	//If the letter selected is part of the array. Log "You selected correctly". Increment wins.
-	if(userGuess.indexOf(bandName)) {  
-      lettersUsed.push(userGuess);
-      wins++;
-      console.log("You selected correctly");
-    }
-
-    // If the letter selected isn't in the array. Log "Wrong letter" and increment losses counter
-    else{
-      losses++;
-      console.log("Wrong letter");
-      
-    }
-	
-	
-	document.getElementById('displayUserGuess').innerHTML = userGuess;
-	document.getElementById('displayTurnsRemaining').innerHTML = turnCounter;
-	document.getElementById('displayLettersUsed').innerHTML = lettersUsed.join(" ");
-	document.getElementById('howManyWins').innerHTML = wins;
-	document.getElementById('howManyLosses').innerHTML = losses;
-	
-
 
 }
 
