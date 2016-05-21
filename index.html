@@ -1,103 +1,136 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Hangman</title>
+ <title>Hangman</title>
 </head>
-<body>
+<body onload="intializeProgram()"> 
+
+
 
 <script type="text/javascript">
 
 var turnCounter = 13;
-var bandName = ["madonna", "depeche mode"];
+var bandName = ["madonna", "blondie", "poison", "smiths"];
+var randomBandName = [];
+var strBandName = "x";
+
 var wins = 0;
 var losses = 0;
 var lettersUsed = [];
 var userGuess = "";
+var str1 = "";
+var str2 = "";
+var ranNum = 9;
+
+function intializeProgram() {
+  ranNum = Math.floor(Math.random()*bandName.length);
+  console.log("ranNum=" + ranNum);
+  randomBandName = bandName[ranNum];
+  console.log("randomBandName = " + randomBandName);
+  strBandName = bandName[ranNum];
+}
 
 function setScreen(){
-			document.getElementById('displayUserGuess').innerHTML = userGuess;
-			document.getElementById('displayTurnsRemaining').innerHTML = turnCounter;
-			document.getElementById('displayLettersUsed').innerHTML = lettersUsed.join("");
-			document.getElementById('howManyWins').innerHTML = wins;
-			document.getElementById('howManyLosses').innerHTML = losses;
-		}
+   document.getElementById('displayUserGuess').innerHTML = userGuess;
+   document.getElementById('displayTurnsRemaining').innerHTML = turnCounter;
+   document.getElementById('displayLettersUsed').innerHTML = lettersUsed.join("");
+   document.getElementById('howManyWins').innerHTML = wins;
+   document.getElementById('howManyLosses').innerHTML = losses;
+  }
 
+function updateWins(){
+  wins++;
+  document.getElementById('howManyWins').innerHTML = wins;
+
+}
+
+function updateLosses(){
+  losses++;
+  document.getElementById('howManyLosses').innerHTML = losses;
+ }
+
+ function updateTurnCounter(){
+  turnCounter--;
+  document.getElementById('displayTurnsRemaining').innerHTML = turnCounter;
+
+ }
+
+function turnCounterGtZero() {
+    updateTurnCounter();
+    // setScreen();
+
+    //If the letter selected is part of the array. Log "You selected correctly". Increment 'wins'.
+       if(userGuess.indexOf(bandName)) {  
+           lettersUsed.push(userGuess);
+           setScreen();
+           // wins++;
+           console.log("You selected correctly");
+
+           //setScreen();
+
+           //Check to see if the user has won
+           str1 = lettersUsed.join("");
+           console.log(str1);
+           str2 = bandName.join("");
+           console.log(str2);
+
+           var n = str1.localeCompare(str2);
+            console.log(n);
+           if (n != -1){
+              // updateWins();
+              // wins++;
+              //resetAll();
+              
+              
+
+              for (var i = 0; i < lettersUsed.length; i++) {
+                lettersUsed[i] = "";
+              }
+
+              // alert("You win!");
+              //setScreen();
+            
+              console.log("n=" + n);
+              }
+          }
+  }
+
+function turnCounterLtZero() {
+    alert("You lost");
+    updateLosses();
+    turnCounter = 13;
+    userGuess = " ";
+    lettersUsed.length = 0;
+    setScreen();
+  }
+
+  
 document.onkeyup = function(event) {
 
-	userGuess = String.fromCharCode(event.keyCode).toLowerCase();
-	
-	//Checks for duplicate letters entered
-	// if(lettersUsed.indexOf(userGuess) != -1)
- 	//    {
-    //     alert("You've already used that letter");
-    //     return;
-    // 	  }
-}
-    function selectWord(){
-    	var ranNum = Math.floor(Math.random()*words.length);
+ userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+ 
+  
+ if(turnCounter >  0 ){
+      turnCounterGtZero()
+      }
+    else {
+      turnCounterLtZero();
+      }
+     
+  
+}  // document.onkeyup = function(event) end
 
-    }
-	
-	//Reduces counter from 13
-	function turnCounter(){
-		turnCounter-- ;
-
-		//Begin if statement
-		if(userGuess.indexOf(bandName)== 1) {
-			lettersUsed.push(userGuess);
-			setScreen();
-			console.log('You selected a letter');
-		}
-	}//End of Function 'turnCounter'
-
-}//End of Function 'event'
-
-		//If the letter selected is part of the array. Log "You selected correctly". Increment 'wins'.
-			// if(userGuess.indexOf(bandName)) {  
-		 //      lettersUsed.push(userGuess);
-		      // wins++;
-		    //   console.log("You selected correctly");
-		    //   setScreen();
-		    // }
-		    // If the letter selected isn't in the array. Log "Wrong letter" and increment losses counter
-		    // else{
-		    //   losses++;
-		    //   console.log("Wrong letter");      
-		    // }			
-	//} //End of turncounter if statement	
-
-	// else{
-	// 	alert("You lost");
-	// 	var r = confirm("Would you like to play again?");
-	// 		if (r == true) {
-
-				//reset variables
-			// 	userGuess = "";
-			// 	turnCounter = 13;
-			// 	wins = 0;
-			// 	losses = 0;
-			// 	lettersUsed =[];
-			// 	setScreen();
-			// } else {
-			//     alert("Have a great day!");
-			//     userGuess = "";
-			//     turnCounter = 13;
-			// 	wins = 0;
-			// 	losses = 0;
-			// 	lettersUsed =[];
-			// 	setScreen();
-			// 	}
-	//}//End of else statement
-// }
 </script>
 
-<h1>Hangman Game</h1>
-<h2>Press any key to get started</h2>
-<br>
-<h3>You entered "<span id="displayUserGuess"></span>"</h3>
-<h3>Guesses Remaining: <span id="displayTurnsRemaining"></span></h3>
-<h4>Letters Used: "<span id="displayLettersUsed"></span>"</h4>
-<h4>Wins: "<span id="howManyWins"></span>"</h4>
-<h4>Losses: "<span id="howManyLosses"></span>"</h4>
+  <h1>Hangman Game</h1>
+  <h2>Press any key to get started</h2>
+  <br>
+  <h3>You entered "<span id="displayUserGuess"></span>"</h3>
+  <h3>Guesses Remaining: <span id="displayTurnsRemaining"></span></h3>
+  <h4>Letters Used: "<span id="displayLettersUsed"></span>"</h4>
+  <h4>Wins: "<span id="howManyWins"></span>"</h4>
+  <h4>Losses: "<span id="howManyLosses"></span>"</h4>
 </body>
 </html>
+
