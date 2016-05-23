@@ -29,13 +29,14 @@ var workIndex = 0;
 function intializeProgram() {
   ranNum = Math.floor(Math.random() * bandName.length);
   console.log("ranNum=" + ranNum);
-  randomBandName = bandName[ranNum];
+  randomBandName = [...bandName[ranNum]];
   console.log("randomBandName = " + randomBandName);
   strBandName = bandName[ranNum];
 
   for (var i = 0; i < randomBandName.length; i++) {
     dispBandName[i] = "_";
   }
+
    document.getElementById('displayWordToGuess').innerHTML = dispBandName.join("");
    console.log(dispBandName);
    turnCounter = 13;
@@ -75,15 +76,48 @@ function turnCounterGtZero() {
     lettersUsed.push(userGuess);
     updateScreen();
 
-    workIndex = -1;
-    workIndex = randomBandName.indexOf(userGuess);
+    for (var index1 = 0; index1 < randomBandName.length; index1++) {
+      
+      i = randomBandName.indexOf(userGuess);
+      console.log("i = " + i );
+      if(i != -1) {
+        dispBandName[i] = userGuess;   //found letter from userGuess
+        updateScreen();
+        randomBandName[i] = "_";
+      }
 
-    if (workIndex != -1) {
-      dispBandName[workIndex] = userGuess;
-     
+
+      
+
     }
-     updateScreen();
+
+
+
+
+    // workIndex = -1;
+    // workIndex = randomBandName.indexOf(userGuess);
+    
+
+    // // for (var i = 0; i < randomBandName.length; i++) {
+    // //   // workIndex = -1;
+    // //   workIndex = randomBandName.indexOf(userGuess);
+
+    // //   if(i != -1);
+    // // }
+
+    // if (workIndex != -1) {
+    //   dispBandName[workIndex] = userGuess;
+     
+    // }
+     // updateScreen();
   }
+
+
+
+
+
+
+
 
 function turnCounterLtZero() {
     alert("You lost");
