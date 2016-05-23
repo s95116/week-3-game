@@ -3,7 +3,11 @@
 <html>
 <head>
  <title>Hangman</title>
+
+<link href="assets/css/style.css" rel="stylesheet" type="text/css">
+
 </head>
+
 <body onload="intializeProgram()"> 
 
 
@@ -21,16 +25,13 @@ var losses = 0;
 
 var lettersUsed = [];
 var userGuess = "";
-var str1 = "";
-var str2 = "";
 var ranNum = 9;
-var workIndex = 0;
 
 function intializeProgram() {
   ranNum = Math.floor(Math.random() * bandName.length);
-  console.log("ranNum=" + ranNum);
+  // console.log("ranNum=" + ranNum);
   randomBandName = [...bandName[ranNum]];
-  console.log("randomBandName = " + randomBandName);
+  // console.log("randomBandName = " + randomBandName);
   strBandName = bandName[ranNum];
 
   dispBandName.length = 0;
@@ -43,7 +44,7 @@ function intializeProgram() {
   lettersUsed.length = 0;
 
    document.getElementById('displayWordToGuess').innerHTML = dispBandName.join("");
-   console.log(dispBandName);
+   // console.log(dispBandName);
    turnCounter = 13;
    updateScreen();
 
@@ -87,9 +88,6 @@ function turnCounterGtZero() {
      if (lettersUsed.indexOf(userGuess) != -1){
         return;
      }
-
-
-
 
     updateTurnCounter();
     lettersUsed.push(userGuess);
@@ -135,13 +133,13 @@ document.onkeyup = function(event) {
  
   
  if(turnCounter >  0 ){
-      turnCounterGtZero()
+      turnCounterGtZero();
       }
     else {
       turnCounterLtZero();
       }     
   
-}  //End of document.onkeyup = function(event)
+};  //End of document.onkeyup = function(event)
 
 </script>
 
